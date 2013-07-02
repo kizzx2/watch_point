@@ -37,6 +37,32 @@ You'll get a Pry prompt at the `hello` line:
 
     [1] pry(main)> 
 
+## Watching custom objects
+
+`WatchPoint` works out of the box with primitive mutable objects (e.g. `Array`, `Hash`, `String`). It uses the `hash` function to determine whether a variable has changed. So to support new objects make sure you include all "members of interest" of your class into the `hash` function. For example:
+
+```ruby
+require 'watch_point'
+
+class Foo
+  attr_accessor :one, :two
+
+  def hash
+    one.hash + two.hash
+  end
+end
+
+f = Foo.new
+f.one = "One"
+f.two = "Two"
+
+WatchPoint.watch(f)
+WatchPoint.enable
+
+# Triggers watchpoint
+f.two = "Three"
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
