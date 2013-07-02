@@ -21,6 +21,7 @@ WatchPoint.watch(name)
 
 WatchPoint.enable
 
+# Triggers watchpoint
 hello(name)
 
 WatchPoint.disable
