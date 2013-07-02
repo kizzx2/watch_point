@@ -18,9 +18,38 @@ Or install it yourself as:
 
     $ gem install watch_point
 
-## Examples
+## Example
 
-TODO:
+```ruby
+require 'watch_point'
+
+def hello(girl)
+  girl << " Baby"
+  puts "Hello, #{girl}"
+end
+
+name = "Mary"
+
+# Watch any variables!
+WatchPoint.watch(name)
+
+WatchPoint.enable
+
+hello(name)
+
+WatchPoint.disable
+```
+
+You'll get a Pry prompt at the `hello` line:
+
+    From: foo.rb @ line 4 Object#hello:
+
+        3: def hello(girl)
+     => 4:   girl << " Baby"
+        5:   puts "Hello, #{girl}"
+        6: end
+
+    [1] pry(main)> 
 
 ## Contributing
 
