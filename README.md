@@ -4,20 +4,6 @@ Stop exactly where a variable gets changed (a.k.a. watchpoints or `trace_var` fo
 
 According to [this page](http://www.ruby-doc.org/docs/ProgrammingRuby/html/trouble.html) on ruby-doc.org there used to be watchpoints built into RDebug but I can't seem to find it in 1.9.3 and 2.0.0 on Mac. It turned out to be quite easy to roll your own so here goes.
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-    gem 'watch_point'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install watch_point
-
 ## Example
 
 ```ruby
@@ -50,6 +36,20 @@ You'll get a Pry prompt at the `hello` line:
         6: end
 
     [1] pry(main)> 
+
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'watch_point'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install watch_point
 
 ## Contributing
 
