@@ -4,6 +4,12 @@ Stop exactly where a variable gets changed (a.k.a. watchpoints or `trace_var` fo
 
 According to [this page](http://www.ruby-doc.org/docs/ProgrammingRuby/html/trouble.html) on ruby-doc.org there used to be watchpoints built into RDebug but I can't seem to find it in 1.9.3 and 2.0.0 on Mac. It turned out to be quite easy to roll your own so here goes.
 
+## Features
+
+- Watch any variable; not just globals.
+- Watch any types of objects.
+- Watch arbitrary expressions.
+
 ## Example
 
 ```ruby
@@ -62,6 +68,41 @@ WatchPoint.enable
 
 # Triggers watchpoint
 f.two = "Three"
+```
+
+## Watching an arbitrary expression
+
+```ruby
+require 'watch_point'
+
+class Foo
+  attr_accessor :one, :two
+
+  def mutate(one, two)
+    # Atomically swap the two values
+    @one, @two = one, two
+  end
+end
+
+f = Foo.new
+f.one = 4
+f.two = 6
+
+# Define an anonymous class whose #hash method returns the value you
+# want to watch
+WatchPoint.watch(Class.new do
+  define_method(:hash) do
+    f.one + f.two
+  end
+end.new)
+WatchPoint.enable
+
+# Do not trigger watchpoint
+f.mutate(6, 4)
+f.mutate(0, 10)
+
+# Triggers watchpoint
+f.mutate(4, 3)
 ```
 
 ## Installation
